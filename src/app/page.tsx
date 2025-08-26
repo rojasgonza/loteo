@@ -1,50 +1,57 @@
-"use client";
-import {useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from './context/AuthContext';
 
 export default function Home() {
+  const { isAuthenticated, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading) {
+      if (isAuthenticated) {
+        router.push('/landing');
+      } else {
+        router.push('/login');
+      }
+    }
+  }, [isAuthenticated, loading, router]);
+
+  // Muestra un loading mientras redirige
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 flex flex-col items-center p-6">
-      {/* Encabezado */}
-      <header className="w-full max-w-4xl text-center py-10">
-        <h1 className="text-4xl font-extrabold text-blue-800 mb-2">
-          Gestión de Productos Finales
-        </h1>
-        <p className="text-lg text-blue-600">
-          Accedé rápido a las secciones de tu sistema
-        </p>
-      </header>
-
-      {/* Grid de opciones */}
-      <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl w-full">
-        {[
-          { href: "/insumos", title: "Insumos", desc: "Gestión de insumos disponibles" },
-          { href: "/proveedores", title: "Proveedores", desc: "Listado y registro de proveedores" },
-          { href: "/lotes_insumos", title: "Ingreso de insumos", desc: "Registrar lotes de insumos" },
-          { href: "/productos", title: "Productos", desc: "Registro y control de productos" },
-          { href: "/produccion", title: "Producción", desc: "Ingreso de producción" },
-          { href: "/data", title: "Produccion por lotes", desc: "Productos finales con respectivos lotes" },
-        ].map((item, i) => (
-          <Link
-            key={i}
-            href={item.href}
-            className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition-shadow duration-300 border border-blue-100 flex flex-col items-start"
-          >
-            <h2 className="text-xl font-semibold text-blue-800 mb-2">
-              {item.title}
-            </h2>
-            <p className="text-gray-600 text-sm">{item.desc}</p>
-          </Link>
-        ))}
-      </main>
-
-      {/* Footer */}
-      <footer className="mt-auto py-6 text-center text-sm text-gray-500">
-        © {new Date().getFullYear()} Gestión de Productos Finales
-      </footer>
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      height: '100vh',
+      backgroundColor: '#f9fafb'
+    }}>
+      <div style={{ 
+        textAlign: 'center',
+        padding: '2rem',
+        backgroundColor: 'white',
+        borderRadius: '8px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+      }}>
+        <div style={{ 
+          width: '50px', 
+          height: '50px', 
+          border: '4px solid #e5e7eb',
+          borderTop: '4px solid #3b82f6',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+          margin: '0 auto 1rem'
+        }}></div>
+        <p style={{ color: '#4b5563' }}>Redirigiendo...</p>
+      </div>
+      
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }
-

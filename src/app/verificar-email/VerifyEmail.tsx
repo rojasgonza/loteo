@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export default function VerifyEmail() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const verified = searchParams.get('verified');
+  const verified = searchParams.get("verified");
   const [countdown, setCountdown] = useState(5);
 
   useEffect(() => {
-    if (verified === 'true') {
+    if (verified === "true") {
       const timer = setInterval(() => {
         setCountdown((prev) => prev - 1);
       }, 1000);
 
       const redirectTimeout = setTimeout(() => {
-        router.push('/login');
+        router.push("/login");
       }, 5000);
 
       return () => {
@@ -31,16 +31,18 @@ export default function VerifyEmail() {
       <div className="max-w-md w-full">
         <div
           className={`p-6 rounded-lg shadow-md text-center ${
-            verified === 'true' ? 'text-green-600' : 'text-red-600'
+            verified === "true" ? "text-green-600" : "text-red-600"
           }`}
         >
           <h2 className="text-2xl font-bold mb-2">
-            {verified === 'true' ? 'Verificación exitosa' : 'Error de verificación'}
+            {verified === "true"
+              ? "Verificación exitosa"
+              : "Error de verificación"}
           </h2>
           <p>
-            {verified === 'true'
+            {verified === "true"
               ? `Email verificado correctamente ✅. Serás redirigido al login en ${countdown}`
-              : 'Token inválido o expirado ❌'}
+              : "Token inválido o expirado ❌"}
           </p>
         </div>
       </div>

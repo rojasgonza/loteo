@@ -1,3 +1,2 @@
-// export const API_URL = 'https://stuck-judy-dock-immediate.trycloudflare.com';
-export const API_URL = 'https://hospitality-dreams-tomato-rooms.trycloudflare.com';
-
+// export const API_URL = 'http://localhost:3000';
+export const API_URL = 'https://origins-garmin-dave-owen.trycloudflare.com';

@@ -1,2 +1,2 @@
 // export const API_URL = 'http://localhost:3000';
-export const API_URL = 'https://particles-rebates-members-inches.trycloudflare.com';
+export const API_URL = 'https://loved-at-cloud-reverse.trycloudflare.com';

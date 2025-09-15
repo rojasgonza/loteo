@@ -259,7 +259,6 @@ Insumos usados:
     // Modal de Lote Insumo
     const [modalLoteOpen, setModalLoteOpen] = useState(false);
     const [loteSeleccionado, setLoteSeleccionado] = useState<LoteInsumo | null>(null);
-    console.log(paginatedData)
 
     const abrirModalLote = (lote: LoteInsumo) => {
         setLoteSeleccionado(lote);

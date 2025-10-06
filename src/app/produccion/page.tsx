@@ -153,7 +153,7 @@ export default function ProduccionCompuesta() {
     useEffect(() => {
         if (fechaProduccion) {
             const fecha = new Date(fechaProduccion);
-            fecha.setDate(fecha.getDate() + 15); // suma 15 días corridos
+            fecha.setDate(fecha.getDate() + 15); // suma 15 días
             const fechaFormateada = fecha.toISOString().split('T')[0];
             setFechaVencimiento(fechaFormateada);
         } else {
@@ -161,6 +161,16 @@ export default function ProduccionCompuesta() {
         }
     }, [fechaProduccion]);
 
+    useEffect(() => {
+        if (fechaProduccion && estado === "1") { // solo si es congelado
+            const fecha = new Date(fechaProduccion);
+            fecha.setDate(fecha.getDate() + 30); // suma 30 días
+            const fechaFormateada = fecha.toISOString().split('T')[0];
+            setFechaVencimientoCongelado(fechaFormateada);
+        } else {
+            setFechaVencimientoCongelado('');
+        }
+    }, [fechaProduccion, estado]);
 
 
 
@@ -202,7 +212,7 @@ export default function ProduccionCompuesta() {
                     </div>
 
                     <div>
-                        <label className="block mb-1 font-semibold">Fecha de Vencimiento222</label>
+                        <label className="block mb-1 font-semibold">Fecha de Vencimiento</label>
                         <input
                             type="date"
                             value={fechaVencimiento}
@@ -230,12 +240,11 @@ export default function ProduccionCompuesta() {
                         <input
                             type="date"
                             value={fechaCongelado}
-                            onChange={e => setFechaVencimientoCongelado(e.target.value)}
-                            className="w-full border rounded p-2"
+                            readOnly
+                            className="w-full border rounded p-2 bg-gray-100 cursor-not-allowed"
                             required={estado === "1"}
                         />
                     </div>
-
                     <div>
                         <label className="block mb-1 font-semibold">
                             Cantidad Producida ({productos.find(p => p.id === Number(productoFinalId))?.unidad_medida || ''})
@@ -331,8 +340,9 @@ export default function ProduccionCompuesta() {
                         type="button"
                         onClick={agregarInsumo}
                         className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-                    >Agregar insumo
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                            Agregar insumo
                             <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clipRule="evenodd" />
                         </svg>
 
@@ -341,8 +351,9 @@ export default function ProduccionCompuesta() {
                         type="submit"
                         disabled={loading}
                         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                    >  Cargar produccion
+                    >
                         {loading ? 'Guardando...' : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                            Cargar produccion
                             <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clipRule="evenodd" />
                         </svg>
                         }

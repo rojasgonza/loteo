@@ -150,6 +150,16 @@ export default function ProduccionCompuesta() {
     })
 
 
+    useEffect(() => {
+        if (fechaProduccion) {
+            const fecha = new Date(fechaProduccion);
+            fecha.setDate(fecha.getDate() + 15); // suma 15 días corridos
+            const fechaFormateada = fecha.toISOString().split('T')[0];
+            setFechaVencimiento(fechaFormateada);
+        } else {
+            setFechaVencimiento('');
+        }
+    }, [fechaProduccion]);
 
 
 
@@ -192,15 +202,16 @@ export default function ProduccionCompuesta() {
                     </div>
 
                     <div>
-                        <label className="block mb-1 font-semibold">Fecha de Vencimiento</label>
+                        <label className="block mb-1 font-semibold">Fecha de Vencimiento222</label>
                         <input
                             type="date"
                             value={fechaVencimiento}
-                            onChange={e => setFechaVencimiento(e.target.value)}
-                            className="w-full border rounded p-2"
+                            readOnly // 👈 hace que no se pueda editar
+                            className="w-full border rounded p-2 bg-gray-100 cursor-not-allowed" // opcional: gris para indicar que está bloqueado
                             required
                         />
                     </div>
+
                     <div>
                         <label className="block mb-1 font-semibold">Es congelado?</label>
 
@@ -305,7 +316,7 @@ export default function ProduccionCompuesta() {
                                         type="button"
                                         onClick={() => quitarInsumo(i)}
                                         className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                                    >   quitar insum                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                                    >                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                             <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
                                             <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
                                         </svg>
@@ -320,7 +331,7 @@ export default function ProduccionCompuesta() {
                         type="button"
                         onClick={agregarInsumo}
                         className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-                    >   
+                    >Agregar insumo
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                             <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clipRule="evenodd" />
                         </svg>
@@ -330,7 +341,7 @@ export default function ProduccionCompuesta() {
                         type="submit"
                         disabled={loading}
                         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                    >
+                    >  Cargar produccion
                         {loading ? 'Guardando...' : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                             <path fillRule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clipRule="evenodd" />
                         </svg>

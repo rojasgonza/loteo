@@ -47,7 +47,7 @@ export default function Navbar() {
             href={isAuthenticated ? "/" : "/"}
             className="text-white font-bold text-xl"
           >
-            Sistema de Producción
+            Sistema GLORIAS
           </Link>
 
           {/* Botón menú (mobile) */}
